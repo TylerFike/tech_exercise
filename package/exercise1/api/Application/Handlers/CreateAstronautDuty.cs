@@ -3,7 +3,7 @@ using MediatR;
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
 using StargateAPI.Business.Data;
-using StargateAPI.Controllers;
+using StargateAPI.Api.Controllers;
 using System.Net;
 
 namespace StargateAPI.Business.Commands
@@ -30,6 +30,7 @@ namespace StargateAPI.Business.Commands
 
         public Task Process(CreateAstronautDuty request, CancellationToken cancellationToken)
         {
+            //unhandled exception
             var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
 
             if (person is null) throw new BadHttpRequestException("Bad Request");
@@ -117,7 +118,7 @@ namespace StargateAPI.Business.Commands
         }
     }
 
-    public class CreateAstronautDutyResult : BaseResponse
+    public class CreateAstronautDutyResult 
     {
         public int? Id { get; set; }
     }

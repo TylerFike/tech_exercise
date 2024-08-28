@@ -2,7 +2,7 @@
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
 using StargateAPI.Business.Data;
-using StargateAPI.Controllers;
+using StargateAPI.Api.Controllers;
 
 namespace StargateAPI.Business.Commands
 {
@@ -56,7 +56,7 @@ namespace StargateAPI.Business.Commands
         }
     }
 
-    public class CreatePersonResult : BaseResponse
+    public class CreatePersonResult
     {
         public int Id { get; set; }
     }

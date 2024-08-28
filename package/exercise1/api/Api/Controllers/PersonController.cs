@@ -4,7 +4,7 @@ using StargateAPI.Business.Commands;
 using StargateAPI.Business.Queries;
 using System.Net;
 
-namespace StargateAPI.Controllers
+namespace StargateAPI.Api.Controllers
 {
    
     [ApiController]
@@ -17,8 +17,8 @@ namespace StargateAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("")]
-        public async Task<IActionResult> GetPeople()
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllPeople()
         {
             try
             {
@@ -27,21 +27,16 @@ namespace StargateAPI.Controllers
 
                 });
 
-                return this.GetResponse(result);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return NotFound();
             }
         }
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetPersonByName(string name)
+        public async Task<IActionResult> GetPersonByName([FromRoute] string name)
         {
             try
             {
@@ -50,20 +45,15 @@ namespace StargateAPI.Controllers
                     Name = name
                 });
 
-                return this.GetResponse(result);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return NotFound();
             }
         }
 
-        [HttpPost("")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreatePerson([FromBody] string name)
         {
             try
@@ -73,16 +63,11 @@ namespace StargateAPI.Controllers
                     Name = name
                 });
 
-                return this.GetResponse(result);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return NotFound();
             }
 
         }

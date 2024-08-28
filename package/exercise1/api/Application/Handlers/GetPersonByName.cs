@@ -2,7 +2,6 @@
 using MediatR;
 using StargateAPI.Business.Data;
 using StargateAPI.Business.Dtos;
-using StargateAPI.Controllers;
 
 namespace StargateAPI.Business.Queries
 {
@@ -33,7 +32,7 @@ namespace StargateAPI.Business.Queries
         }
     }
 
-    public class GetPersonByNameResult : BaseResponse
+    public class GetPersonByNameResult
     {
         public PersonAstronaut? Person { get; set; }
     }

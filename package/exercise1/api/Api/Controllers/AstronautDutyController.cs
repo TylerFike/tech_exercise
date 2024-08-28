@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StargateAPI.Business.Commands;
 using StargateAPI.Business.Queries;
+using StargateAPI.Api.Models;
 using System.Net;
 
-namespace StargateAPI.Controllers
+namespace StargateAPI.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -26,24 +26,20 @@ namespace StargateAPI.Controllers
                     Name = name
                 });
 
-                return this.GetResponse(result);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return NotFound();
             }            
         }
 
-        [HttpPost("")]
-        public async Task<IActionResult> CreateAstronautDuty([FromBody] CreateAstronautDuty request)
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateAstronautDuty([FromBody] CreateAstronautDutyRequest request)
         {
+            //add error handling
                 var result = await _mediator.Send(request);
-                return this.GetResponse(result);           
+                return Ok(result);          
         }
     }
 }
