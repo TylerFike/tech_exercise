@@ -1,6 +1,6 @@
 ﻿namespace StargateAPI.Business.Dtos
 {
-    public class PersonAstronaut
+    public class PersonDto
     {
         public int PersonId { get; set; }
 

@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using StargateAPI.Business.Queries;
 using StargateAPI.Api.Models;
 using System.Net;
+using StargateAPI.Business.Data;
+using StargateAPI.Business.Commands;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace StargateAPI.Api.Controllers
 {
@@ -17,7 +20,7 @@ namespace StargateAPI.Api.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetAstronautDutiesByName(string name)
+        public async Task<IActionResult> GetAstronautDutiesByName([FromRoute] string name)
         {
             try
             {
@@ -28,7 +31,7 @@ namespace StargateAPI.Api.Controllers
 
                 return Ok(result);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return NotFound();
             }            
@@ -37,9 +40,20 @@ namespace StargateAPI.Api.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateAstronautDuty([FromBody] CreateAstronautDutyRequest request)
         {
-            //add error handling
-                var result = await _mediator.Send(request);
-                return Ok(result);          
+            CreateAstronautDutyCommand astronautDutyCommand = new CreateAstronautDutyCommand(){
+                Name = request.Name,
+                Rank =  request.Rank,
+                DutyTitle = request.DutyTitle,
+                DutyStartDate = request.DutyStartDate
+            };
+            try{
+                var result = await _mediator.Send(astronautDutyCommand);
+                
+                return Ok(result);  
+            }catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }        
         }
     }
 }

@@ -6,70 +6,71 @@ using System.Net;
 
 namespace StargateAPI.Api.Controllers
 {
-   
-    [ApiController]
-    [Route("[controller]")]
-    public class PersonController : ControllerBase
+
+
+[ApiController]
+[Route("[controller]")]
+public class PersonController : ControllerBase
+{
+    private readonly IMediator _mediator;
+    public PersonController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
-        public PersonController(IMediator mediator)
+        _mediator = mediator;
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllPeople()
+    {
+        try
         {
-            _mediator = mediator;
+            var result = await _mediator.Send(new GetPeople()
+            {
+
+            });
+
+            return Ok(result);
         }
-
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAllPeople()
+        catch (Exception ex)
         {
-            try
-            {
-                var result = await _mediator.Send(new GetPeople()
-                {
-
-                });
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return NotFound();
-            }
-        }
-
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetPersonByName([FromRoute] string name)
-        {
-            try
-            {
-                var result = await _mediator.Send(new GetPersonByName()
-                {
-                    Name = name
-                });
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return NotFound();
-            }
-        }
-
-        [HttpPost("create")]
-        public async Task<IActionResult> CreatePerson([FromBody] string name)
-        {
-            try
-            {
-                var result = await _mediator.Send(new CreatePerson()
-                {
-                    Name = name
-                });
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return NotFound();
-            }
-
+            return NotFound();
         }
     }
+
+    [HttpGet("{name}")]
+    public async Task<IActionResult> GetPersonByName([FromRoute] string name)
+    {
+        try
+        {
+            var result = await _mediator.Send(new GetPersonByName()
+            {
+                Name = name
+            });
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPost("create")]
+    public async Task<IActionResult> CreatePerson([FromBody] string name)
+    {
+        try
+        {
+            var result = await _mediator.Send(new CreatePerson()
+            {
+                Name = name
+            });
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return NotFound();
+        }
+
+    }
+}
 }

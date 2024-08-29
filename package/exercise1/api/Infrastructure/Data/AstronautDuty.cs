@@ -8,6 +8,7 @@ namespace StargateAPI.Business.Data
     public class AstronautDuty
     {
         public int Id { get; set; }
+        //switch to person name
 
         public int PersonId { get; set; }
 

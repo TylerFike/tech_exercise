@@ -21,12 +21,13 @@ namespace StargateAPI.Business.Queries
         public async Task<GetPersonByNameResult> Handle(GetPersonByName request, CancellationToken cancellationToken)
         {
             var result = new GetPersonByNameResult();
+            //combine person and person astronaut;
 
             var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE '{request.Name}' = a.Name";
 
-            var person = await _context.Connection.QueryAsync<PersonAstronaut>(query);
+            var personResult = await _context.Connection.QueryAsync<PersonDto>(query);
 
-            result.Person = person.FirstOrDefault();
+            result.Person = personResult.FirstOrDefault();
 
             return result;
         }
@@ -34,6 +35,6 @@ namespace StargateAPI.Business.Queries
 
     public class GetPersonByNameResult
     {
-        public PersonAstronaut? Person { get; set; }
+        public PersonDto? Person { get; set; }
     }
 }

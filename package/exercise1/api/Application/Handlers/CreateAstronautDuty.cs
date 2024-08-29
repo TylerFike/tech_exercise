@@ -8,7 +8,7 @@ using System.Net;
 
 namespace StargateAPI.Business.Commands
 {
-    public class CreateAstronautDuty : IRequest<CreateAstronautDutyResult>
+    public class CreateAstronautDutyCommand : IRequest<CreateAstronautDutyResult>
     {
         public required string Name { get; set; }
 
@@ -19,7 +19,7 @@ namespace StargateAPI.Business.Commands
         public DateTime DutyStartDate { get; set; }
     }
 
-    public class CreateAstronautDutyPreProcessor : IRequestPreProcessor<CreateAstronautDuty>
+    public class CreateAstronautDutyPreProcessor : IRequestPreProcessor<CreateAstronautDutyCommand>
     {
         private readonly StargateContext _context;
 
@@ -28,7 +28,7 @@ namespace StargateAPI.Business.Commands
             _context = context;
         }
 
-        public Task Process(CreateAstronautDuty request, CancellationToken cancellationToken)
+        public Task Process(CreateAstronautDutyCommand request, CancellationToken cancellationToken)
         {
             //unhandled exception
             var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
@@ -43,7 +43,7 @@ namespace StargateAPI.Business.Commands
         }
     }
 
-    public class CreateAstronautDutyHandler : IRequestHandler<CreateAstronautDuty, CreateAstronautDutyResult>
+    public class CreateAstronautDutyHandler : IRequestHandler<CreateAstronautDutyCommand, CreateAstronautDutyResult>
     {
         private readonly StargateContext _context;
 
@@ -51,9 +51,8 @@ namespace StargateAPI.Business.Commands
         {
             _context = context;
         }
-        public async Task<CreateAstronautDutyResult> Handle(CreateAstronautDuty request, CancellationToken cancellationToken)
+        public async Task<CreateAstronautDutyResult> Handle(CreateAstronautDutyCommand request, CancellationToken cancellationToken)
         {
-
             var query = $"SELECT * FROM [Person] WHERE \'{request.Name}\' = Name";
 
             var person = await _context.Connection.QueryFirstOrDefaultAsync<Person>(query);

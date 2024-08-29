@@ -129,6 +129,14 @@ C:/Users/dallas.davis/OneDrive - BAM Technologies, LLC/Desktop/tech_exercise_v.0
 C:/Users/dallas.davis/OneDrive - BAM Technologies, LLC/Desktop/tech_exercise_v.0.0.3/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.pdb
 C:/Users/dallas.davis/OneDrive - BAM Technologies, LLC/Desktop/tech_exercise_v.0.0.3/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.genruntimeconfig.cache
 C:/Users/dallas.davis/OneDrive - BAM Technologies, LLC/Desktop/tech_exercise_v.0.0.3/tech_exercise/package/exercise1/api/obj/Debug/net8.0/ref/StargateAPI.dll
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.csproj.AssemblyReference.cache
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.GeneratedMSBuildEditorConfig.editorconfig
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.AssemblyInfoInputs.cache
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.AssemblyInfo.cs
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.csproj.CoreCompileInputs.cache
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.MvcApplicationPartsAssemblyInfo.cs
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.MvcApplicationPartsAssemblyInfo.cache
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.sourcelink.json
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/appsettings.Development.json
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/appsettings.json
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/StargateAPI
@@ -239,14 +247,6 @@ C:/Users/dallas.davis/OneDrive - BAM Technologies, LLC/Desktop/tech_exercise_v.0
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/runtimes/win-arm64/native/e_sqlite3.dll
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/runtimes/win-x86/native/e_sqlite3.dll
-/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.csproj.AssemblyReference.cache
-/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.GeneratedMSBuildEditorConfig.editorconfig
-/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.AssemblyInfoInputs.cache
-/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.AssemblyInfo.cs
-/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.csproj.CoreCompileInputs.cache
-/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.MvcApplicationPartsAssemblyInfo.cs
-/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.MvcApplicationPartsAssemblyInfo.cache
-/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.sourcelink.json
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/staticwebassets.build.json
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/staticwebassets.development.json
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/staticwebassets/msbuild.StargateAPI.Microsoft.AspNetCore.StaticWebAssets.props
