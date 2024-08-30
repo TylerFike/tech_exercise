@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
-using StargateAPI.Business.Data;
-using StargateAPI.Api.Controllers;
+using StargateAPI.Infrastructure.Data;
 
-namespace StargateAPI.Business.Commands
+namespace StargateAPI.Application.Commands
 {
     public class CreatePerson : IRequest<CreatePersonResult>
     {
@@ -20,12 +19,10 @@ namespace StargateAPI.Business.Commands
         }
         public Task Process(CreatePerson request, CancellationToken cancellationToken)
         {
-            try{
-                var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
-            }catch{
-                throw new BadHttpRequestException("Bad Request");
-            }
+            var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
             
+            if (person is not null) throw new BadHttpRequestException("Bad Request");
+
             return Task.CompletedTask;
         }
     }

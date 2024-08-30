@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StargateAPI.Business.Commands;
-using StargateAPI.Business.Queries;
+using StargateAPI.Application.Commands;
+using StargateAPI.Application.Queries;
 using System.Net;
 
 namespace StargateAPI.Api.Controllers
@@ -68,7 +68,7 @@ public class PersonController : ControllerBase
         }
         catch (Exception ex)
         {
-            return NotFound();
+            return BadRequest(ex);
         }
 
     }

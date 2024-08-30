@@ -1,10 +1,9 @@
 ﻿using Dapper;
 using MediatR;
-using StargateAPI.Business.Data;
-using StargateAPI.Business.Dtos;
-using StargateAPI.Api.Controllers;
+using StargateAPI.Domain.Dtos;
+using StargateAPI.Infrastructure.Data;
 
-namespace StargateAPI.Business.Queries
+namespace StargateAPI.Application.Queries
 {
     public class GetPeople : IRequest<GetPeopleResult>
     {

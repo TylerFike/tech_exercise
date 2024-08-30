@@ -2,11 +2,9 @@
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
-using StargateAPI.Business.Data;
-using StargateAPI.Api.Controllers;
-using System.Net;
+using StargateAPI.Infrastructure.Data;
 
-namespace StargateAPI.Business.Commands
+namespace StargateAPI.Application.Commands
 {
     public class CreateAstronautDutyCommand : IRequest<CreateAstronautDutyResult>
     {
@@ -30,10 +28,11 @@ namespace StargateAPI.Business.Commands
 
         public Task Process(CreateAstronautDutyCommand request, CancellationToken cancellationToken)
         {
-            //unhandled exception
-            var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
-
-            if (person is null) throw new BadHttpRequestException("Bad Request");
+            try{
+                var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
+            }catch(Exception ex){
+                throw new BadHttpRequestException("Bad Request");
+            }
 
             var verifyNoPreviousDuty = _context.AstronautDuties.FirstOrDefault(z => z.DutyTitle == request.DutyTitle && z.DutyStartDate == request.DutyStartDate);
 
@@ -57,7 +56,7 @@ namespace StargateAPI.Business.Commands
 
             var person = await _context.Connection.QueryFirstOrDefaultAsync<Person>(query);
 
-            query = $"SELECT * FROM [AstronautDetail] WHERE {person.Id} = PersonId";
+            query = $"SELECT * FROM [AstronautDetail] WHERE {person?.Id} = PersonId";
 
             var astronautDetail = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDetail>(query);
 
