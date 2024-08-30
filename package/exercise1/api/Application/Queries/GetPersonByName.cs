@@ -1,6 +1,5 @@
-﻿using Dapper;
-using MediatR;
-using StargateAPI.Domain.Dtos;
+﻿using MediatR;
+using StargateAPI.Application;
 using StargateAPI.Infrastructure.Data;
 
 namespace StargateAPI.Application.Queries
@@ -23,9 +22,9 @@ namespace StargateAPI.Application.Queries
             var result = new GetPersonByNameResult();
             //combine person and person astronaut;
 
-            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE '{request.Name}' = a.Name";
+            var personResult = await _context.GetPersonByName(request.Name);
 
-            var personResult = await _context.Connection.QueryAsync<PersonDto>(query);
+            if(personResult.FirstOrDefault() is null) throw new BadHttpRequestException("Person Not Found");
 
             result.Person = personResult.FirstOrDefault();
 

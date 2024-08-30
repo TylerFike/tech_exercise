@@ -1,6 +1,5 @@
 using StargateApi.Tests;
 using Moq;
-using Microsoft.AspNetCore.Http;
 using StargateAPI.Infrastructure.Data;
 using StargateAPI.Application.Commands;
 namespace Application.Tests{

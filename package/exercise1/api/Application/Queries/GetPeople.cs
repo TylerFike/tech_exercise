@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using MediatR;
-using StargateAPI.Domain.Dtos;
+using StargateAPI.Application;
+using StargateAPI.Infrastructure;
 using StargateAPI.Infrastructure.Data;
 
 namespace StargateAPI.Application.Queries
@@ -21,9 +22,7 @@ namespace StargateAPI.Application.Queries
         {
             var result = new GetPeopleResult();
 
-            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id";
-
-            var people = await _context.Connection.QueryAsync<PersonDto>(query);
+            var people = await _context.GetAllPeople();
 
             result.People = people.ToList();
 

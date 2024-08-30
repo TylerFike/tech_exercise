@@ -1,4 +1,4 @@
-﻿namespace StargateAPI.Domain.Dtos
+﻿namespace StargateAPI.Application
 {
     public class PersonDto
     {

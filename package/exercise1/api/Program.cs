@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using StargateAPI.Application.Commands;
 using StargateAPI.Infrastructure.Data;
+using Serilog;
+using Serilog.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// builder.Host.UseSerilog((context, services, configuration) => configuration  {
+//                 .ReadFrom.Configuration(context.Configuration)
+//                 });
 builder.Services.AddDbContext<StargateContext>(options => 
     options.UseSqlite(builder.Configuration.GetConnectionString("StarbaseApiDatabase")));
 

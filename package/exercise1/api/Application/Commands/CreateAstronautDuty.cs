@@ -2,6 +2,7 @@
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 using StargateAPI.Infrastructure.Data;
 
 namespace StargateAPI.Application.Commands
@@ -28,15 +29,13 @@ namespace StargateAPI.Application.Commands
 
         public Task Process(CreateAstronautDutyCommand request, CancellationToken cancellationToken)
         {
-            try{
-                var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
-            }catch(Exception ex){
-                throw new BadHttpRequestException("Bad Request");
-            }
-
+            var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
+            
+            if(person is null)throw new BadHttpRequestException("Person Not Found");
+            
             var verifyNoPreviousDuty = _context.AstronautDuties.FirstOrDefault(z => z.DutyTitle == request.DutyTitle && z.DutyStartDate == request.DutyStartDate);
 
-            if (verifyNoPreviousDuty is not null) throw new BadHttpRequestException("Bad Request");
+            if (verifyNoPreviousDuty is not null) throw new BadHttpRequestException("Duplicate Duty");
 
             return Task.CompletedTask;
         }
@@ -60,13 +59,15 @@ namespace StargateAPI.Application.Commands
 
             var astronautDetail = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDetail>(query);
 
+
             if (astronautDetail == null)
             {
-                astronautDetail = new AstronautDetail();
-                astronautDetail.PersonId = person.Id;
-                astronautDetail.CurrentDutyTitle = request.DutyTitle;
-                astronautDetail.CurrentRank = request.Rank;
-                astronautDetail.CareerStartDate = request.DutyStartDate.Date;
+                astronautDetail = new AstronautDetail(){
+                    PersonId = person.Id,
+                    CurrentDutyTitle = request.DutyTitle,
+                    CurrentRank = request.Rank,
+                    CareerStartDate = request.DutyStartDate.Date,
+                };
                 if (request.DutyTitle == "RETIRED")
                 {
                     astronautDetail.CareerEndDate = request.DutyStartDate.Date;
@@ -88,6 +89,7 @@ namespace StargateAPI.Application.Commands
 
             query = $"SELECT * FROM [AstronautDuty] WHERE {person.Id} = PersonId Order By DutyStartDate Desc";
 
+            //Update current duty
             var astronautDuty = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDuty>(query);
 
             if (astronautDuty != null)

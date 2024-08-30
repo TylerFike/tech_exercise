@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using MediatR;
-using StargateAPI.Domain.Dtos;
 using StargateAPI.Infrastructure.Data;
 
 namespace StargateAPI.Application.Queries
@@ -24,13 +23,17 @@ namespace StargateAPI.Application.Queries
 
             var result = new GetAstronautDutiesByNameResult();
 
-            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE \'{request.Name}\' = a.Name";
+            //var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE \'{request.Name}\' = a.Name";
 
-            var person = await _context.Connection.QueryFirstOrDefaultAsync<PersonDto>(query);
+            var person = await _context.GetPersonByName(request.Name);
 
-            result.Person = person;
+            if(person.FirstOrDefault() is null){  
+                throw new BadHttpRequestException("Person Not Found");
+            }else{
+                result.Person = person.FirstOrDefault();
+            }
 
-            query = $"SELECT * FROM [AstronautDuty] WHERE {person.PersonId} = PersonId Order By DutyStartDate Desc";
+            var query = $"SELECT * FROM [AstronautDuty] WHERE {result.Person.PersonId} = PersonId Order By DutyStartDate Desc";
 
             var duties = await _context.Connection.QueryAsync<AstronautDuty>(query);
 

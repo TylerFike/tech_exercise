@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using StargateAPI.Api.Models;
 using StargateAPI.Application.Commands;
 using StargateAPI.Application.Queries;
@@ -30,7 +31,7 @@ namespace StargateAPI.Api.Controllers
             }
             catch(Exception ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }            
         }
 
@@ -45,11 +46,12 @@ namespace StargateAPI.Api.Controllers
             };
             try{
                 var result = await _mediator.Send(astronautDutyCommand);
-                
+                //log(result);
                 return Ok(result);  
             }catch(Exception ex)
             {
-                return BadRequest(ex);
+                //log(ex);
+                return BadRequest(ex.Message);
             }        
         }
     }

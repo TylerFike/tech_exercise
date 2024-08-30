@@ -261,3 +261,6 @@ C:/Users/dallas.davis/OneDrive - BAM Technologies, LLC/Desktop/tech_exercise_v.0
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.pdb
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/StargateAPI.genruntimeconfig.cache
 /Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/obj/Debug/net8.0/ref/StargateAPI.dll
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/Serilog.dll
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/Serilog.Extensions.Hosting.dll
+/Users/tylerfike/Downloads/tech_exercise/package/exercise1/api/bin/Debug/net8.0/Serilog.Extensions.Logging.dll

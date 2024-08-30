@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
+using StargateAPI.Application;
 using System.Data;
 
 namespace StargateAPI.Infrastructure.Data
@@ -13,6 +15,16 @@ namespace StargateAPI.Infrastructure.Data
         public StargateContext(DbContextOptions<StargateContext> options)
         : base(options)
         {
+        }
+
+        public async Task<IEnumerable<PersonDto>> GetPersonByName(string name){
+            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE '{name}' = a.Name";
+            return await Connection.QueryAsync<PersonDto>(query);
+        }
+
+        public async Task<IEnumerable<PersonDto>>GetAllPeople(){
+            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id";
+            return await Connection.QueryAsync<PersonDto>(query);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
