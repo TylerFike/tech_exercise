@@ -3,6 +3,7 @@ using StargateAPI.Application.Commands;
 using StargateAPI.Infrastructure.Data;
 using Serilog;
 using Serilog.Extensions.Hosting;
+using StargateAPI.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ builder.Services.AddSwaggerGen();
 // builder.Host.UseSerilog((context, services, configuration) => configuration  {
 //                 .ReadFrom.Configuration(context.Configuration)
 //                 });
-builder.Services.AddDbContext<StargateContext>(options => 
+builder.Services.AddDbContext<IStargateContext, StargateContext>(options => 
     options.UseSqlite(builder.Configuration.GetConnectionString("StarbaseApiDatabase")));
 
 builder.Services.AddMediatR(cfg =>

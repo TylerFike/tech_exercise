@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using StargateAPI.Application;
+using StargateAPI.Infrastructure;
 using StargateAPI.Infrastructure.Data;
 
 namespace StargateAPI.Application.Queries
@@ -11,8 +11,8 @@ namespace StargateAPI.Application.Queries
 
     public class GetPersonByNameHandler : IRequestHandler<GetPersonByName, GetPersonByNameResult>
     {
-        private readonly StargateContext _context;
-        public GetPersonByNameHandler(StargateContext context)
+        private readonly IStargateContext _context;
+        public GetPersonByNameHandler(IStargateContext context)
         {
             _context = context;
         }
@@ -20,7 +20,6 @@ namespace StargateAPI.Application.Queries
         public async Task<GetPersonByNameResult> Handle(GetPersonByName request, CancellationToken cancellationToken)
         {
             var result = new GetPersonByNameResult();
-            //combine person and person astronaut;
 
             var personResult = await _context.GetPersonByName(request.Name);
 

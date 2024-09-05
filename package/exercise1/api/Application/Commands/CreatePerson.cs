@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
-using StargateAPI.Infrastructure;
 using StargateAPI.Infrastructure.Data;
 
 namespace StargateAPI.Application.Commands

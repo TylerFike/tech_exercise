@@ -1,40 +1,34 @@
 using StargateApi.Tests;
 using Moq;
-using StargateAPI.Infrastructure.Data;
+using StargateAPI.Infrastructure;
 using StargateAPI.Application.Queries;
-using Microsoft.EntityFrameworkCore;
 using StargateAPI.Application;
 namespace Application.Tests.Queries.Tests{
     public class GetPersonByNameTests: BaseTests
     {
         //private readonly StargateContext _context;
-        private readonly GetPersonByNameHandler _handler;
+        //private readonly GetPersonByNameHandler _handler;
 
         [Test]
         public async Task ShouldReturnPersonDto()
         {
-            var options = new DbContextOptionsBuilder<StargateContext>()
-                            .UseInMemoryDatabase(databaseName: "ShouldReturnPersonDto")
-                            .Options;
-            var dbContext = new StargateContext(options);
-            //dbContext.SetUp()
-            
+            var person = new PersonDto
+            {
+                Name = "test"
+            };
+            var dbContext = new Mock<IStargateContext>();
+            dbContext.Setup(x => x.GetPersonByName(It.IsAny<string>())).ReturnsAsync(person);
             
             //arrange
             var request = new GetPersonByName(){
                 Name="test"
             };
-            var expectedResult = new PersonDto(){
-                Name = "test"
-            };
-            //var mockContext = new Mock<IStargateContext>();
-            var sut = new GetPersonByNameHandler(dbContext);
+            var sut = new GetPersonByNameHandler(dbContext.Object);
 
-            await dbContext.People.AddAsync(new Person(){Name = "test", Id = 40});
             var actualResult = await sut.Handle(request, CancellationToken.None);
 
             //assert
-            Assert.That(actualResult.Person, Is.EqualTo(expectedResult));
+            Assert.That(actualResult.Person, Is.EqualTo(person));
 
         }
 

@@ -1,11 +1,9 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
 using StargateAPI.Application;
-using System.Data;
-
 namespace StargateAPI.Infrastructure.Data
 {
-    public class StargateContext : DbContext
+    public class StargateContext : DbContext, IStargateContext
     {
         //public IDbConnection Connection => Database.GetDbConnection();
         public DbSet<Person> People { get; set; }

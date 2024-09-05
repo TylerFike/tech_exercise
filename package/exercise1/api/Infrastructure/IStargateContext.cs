@@ -11,8 +11,14 @@ namespace StargateAPI.Infrastructure
         DbSet<AstronautDetail> AstronautDetails { get; set; }
         DbSet<AstronautDuty> AstronautDuties { get; set; }
 
-        Task<IEnumerable<PersonDto>> GetPersonByName(string name);
+        Task<PersonDto> GetPersonByName(string name);
         Task<IEnumerable<PersonDto>>GetAllPeople();
+
+        Task<IEnumerable<AstronautDuty>> GetAstronautDuties(int personId);
+
+        Task<AstronautDuty> GetAstronautDuty(int personId);
+
+        Task<AstronautDetail> GetAstronautDetail(int personId);
     }
 }
  
