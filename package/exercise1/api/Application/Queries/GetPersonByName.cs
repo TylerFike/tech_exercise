@@ -24,9 +24,9 @@ namespace StargateAPI.Application.Queries
 
             var personResult = await _context.GetPersonByName(request.Name);
 
-            if(personResult.FirstOrDefault() is null) throw new BadHttpRequestException("Person Not Found");
+            if(personResult is null) throw new BadHttpRequestException("Person Not Found");
 
-            result.Person = personResult.FirstOrDefault();
+            result.Person = personResult;
 
             return result;
         }

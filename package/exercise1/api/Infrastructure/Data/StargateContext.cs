@@ -7,7 +7,7 @@ namespace StargateAPI.Infrastructure.Data
 {
     public class StargateContext : DbContext
     {
-        public IDbConnection Connection => Database.GetDbConnection();
+        //public IDbConnection Connection => Database.GetDbConnection();
         public DbSet<Person> People { get; set; }
         public DbSet<AstronautDetail> AstronautDetails { get; set; }
         public DbSet<AstronautDuty> AstronautDuties { get; set; }
@@ -17,14 +17,40 @@ namespace StargateAPI.Infrastructure.Data
         {
         }
 
-        public async Task<IEnumerable<PersonDto>> GetPersonByName(string name){
-            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE '{name}' = a.Name";
-            return await Connection.QueryAsync<PersonDto>(query);
+        public async Task<PersonDto> GetPersonByName(string name){
+            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE @name = a.Name";
+            //var people = SqlQuery<PersonDto>(query, name);
+            using(var connection = Database.GetDbConnection()){
+                return await connection.QueryFirstOrDefaultAsync<PersonDto>(query, new { name});
+            }
         }
 
         public async Task<IEnumerable<PersonDto>>GetAllPeople(){
             var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id";
-            return await Connection.QueryAsync<PersonDto>(query);
+            using(var connection = Database.GetDbConnection()){
+                return await connection.QueryAsync<PersonDto>(query);
+            }
+        }
+
+        public async Task<IEnumerable<AstronautDuty>> GetAstronautDuties(int personId){
+            var query = $"SELECT * FROM [AstronautDuty] WHERE @personId = PersonId Order By DutyStartDate Desc";
+            using(var connection = Database.GetDbConnection()){
+                return await connection.QueryAsync<AstronautDuty>(query, new {personId});
+            }
+        }
+
+        public async Task<AstronautDuty> GetAstronautDuty(int personId){
+            var query = $"SELECT * FROM [AstronautDuty] WHERE @personId = PersonId Order By DutyStartDate Desc";
+            using(var connection = Database.GetDbConnection()){
+                return await connection.QueryFirstOrDefaultAsync<AstronautDuty>(query, new {personId});
+            }
+        }
+
+        public async Task<AstronautDetail> GetAstronautDetail(int personId){
+            var  query = $"SELECT * FROM [AstronautDetail] WHERE @personId = PersonId";
+            using(var connection = Database.GetDbConnection()){
+                return await connection.QueryFirstOrDefaultAsync<AstronautDetail>(query, new {personId});
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

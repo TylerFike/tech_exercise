@@ -22,7 +22,7 @@ namespace StargateAPI.Application.Commands
         {
             var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
             
-            if (person is not null) throw new BadHttpRequestException("Duplicate Persson");
+            if (person is not null) throw new BadHttpRequestException("Duplicate Person");
 
             return Task.CompletedTask;
         }

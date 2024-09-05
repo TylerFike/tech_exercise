@@ -23,19 +23,15 @@ namespace StargateAPI.Application.Queries
 
             var result = new GetAstronautDutiesByNameResult();
 
-            //var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE \'{request.Name}\' = a.Name";
-
             var person = await _context.GetPersonByName(request.Name);
 
-            if(person.FirstOrDefault() is null){  
+            if(person is null){  
                 throw new BadHttpRequestException("Person Not Found");
             }else{
-                result.Person = person.FirstOrDefault();
+                result.Person = person;
             }
 
-            var query = $"SELECT * FROM [AstronautDuty] WHERE {result.Person.PersonId} = PersonId Order By DutyStartDate Desc";
-
-            var duties = await _context.Connection.QueryAsync<AstronautDuty>(query);
+            var duties = await _context.GetAstronautDuties(result.Person.PersonId);
 
             result.AstronautDuties = duties.ToList();
 

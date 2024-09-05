@@ -1,8 +1,6 @@
-﻿using Dapper;
-using MediatR;
+﻿using MediatR;
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
-using SQLitePCL;
 using StargateAPI.Infrastructure.Data;
 
 namespace StargateAPI.Application.Commands
@@ -51,19 +49,16 @@ namespace StargateAPI.Application.Commands
         }
         public async Task<CreateAstronautDutyResult> Handle(CreateAstronautDutyCommand request, CancellationToken cancellationToken)
         {
-            var query = $"SELECT * FROM [Person] WHERE \'{request.Name}\' = Name";
 
-            var person = await _context.Connection.QueryFirstOrDefaultAsync<Person>(query);
+            var person = await _context.GetPersonByName(request.Name);
 
-            query = $"SELECT * FROM [AstronautDetail] WHERE {person?.Id} = PersonId";
-
-            var astronautDetail = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDetail>(query);
+            var astronautDetail = await _context.GetAstronautDetail(person.PersonId);
 
 
             if (astronautDetail == null)
             {
                 astronautDetail = new AstronautDetail(){
-                    PersonId = person.Id,
+                    PersonId = person.PersonId,
                     CurrentDutyTitle = request.DutyTitle,
                     CurrentRank = request.Rank,
                     CareerStartDate = request.DutyStartDate.Date,
@@ -87,10 +82,8 @@ namespace StargateAPI.Application.Commands
                 _context.AstronautDetails.Update(astronautDetail);
             }
 
-            query = $"SELECT * FROM [AstronautDuty] WHERE {person.Id} = PersonId Order By DutyStartDate Desc";
-
             //Update current duty
-            var astronautDuty = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDuty>(query);
+            var astronautDuty = await _context.GetAstronautDuty(person.PersonId);
 
             if (astronautDuty != null)
             {
@@ -100,7 +93,7 @@ namespace StargateAPI.Application.Commands
 
             var newAstronautDuty = new AstronautDuty()
             {
-                PersonId = person.Id,
+                PersonId = person.PersonId,
                 Rank = request.Rank,
                 DutyTitle = request.DutyTitle,
                 DutyStartDate = request.DutyStartDate.Date,
